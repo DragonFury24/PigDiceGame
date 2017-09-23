@@ -1,3 +1,4 @@
+import javax.lang.model.type.PrimitiveType;
 import java.util.Scanner;
 
 public class Pig {
@@ -5,8 +6,9 @@ public class Pig {
         Scanner keyboard = new Scanner(System.in);
         NumberCube numberCube = new NumberCube();
         int player1Score = 0, player2Score = 0;
+        String input;
 
-        //Values that identify the player's turn
+        //Values that identify the player turn
         final short player1Turn = 0;
         final short player2Turn = 1;
 
@@ -14,44 +16,71 @@ public class Pig {
 
         System.out.println("Player 1 turn.");
         System.out.println("Type R to roll the dice.");
-        if (keyboard.nextLine().equalsIgnoreCase("R"))
-            player1Score += numberCube.roll();
-        System.out.println("You rolled " + numberCube.getRoll() + "!");
-        System.out.println("Your current score is " + player1Score + ".");
-        turn = numberCube.getRoll() == 1 ? player2Turn : turn;
+        input = keyboard.nextLine();
+        while (true) {
+            if (input.equalsIgnoreCase("R")) {
+                numberCube.roll();
+                if (numberCube.getRoll() != 1) {
+                    player1Score += numberCube.getRoll();
+                    System.out.println("You rolled " + numberCube.getRoll() + "!");
+                    System.out.println("Your current score is now " + player1Score + ".");
+                    break;
+                } else {
+                    System.out.println("You rolled " + numberCube.getRoll() + "!");
+                    turn = player2Turn;
+                    System.out.println("Player 2 turn.");
+                    break;
+                }
+            } else {
+                System.out.println("Please type in R.");
+            }
+        }
 
         while (player1Score < 100 && player2Score < 100) {
-            {
             while (turn == player1Turn) {
                 System.out.println("Type R to roll the dice or E to end your turn.");
-                if (keyboard.nextLine().equalsIgnoreCase("R"))
-                    player1Score += numberCube.roll();
-                else if (keyboard.nextLine().equalsIgnoreCase("E"))
+                input = keyboard.nextLine();
+                if (input.equalsIgnoreCase("R")) {
+                    numberCube.roll();
+                    if (numberCube.getRoll() != 1) {
+                        player1Score = numberCube.isDoubleRoll() ? player1Score + numberCube.doubleRollScore() :
+                                player1Score + numberCube.getRoll();
+                        System.out.println("You rolled " + numberCube.getRoll() + "!");
+                        System.out.println("Your current score is " + player1Score + ".");
+                        turn = numberCube.getRoll() == 1 ? player2Turn : turn;
+                    }else {
+                        System.out.println("You rolled " + numberCube.getRoll() + "!");
+                        turn = player2Turn;
+                        System.out.println("Player 2 turn.");
+                    }
+                } else if (input.equalsIgnoreCase("E")) {
                     turn = player2Turn;
-                System.out.println("You rolled " + numberCube.getRoll() + "!");
-                System.out.println("Your current score is " + player1Score + ".");
+                    System.out.println("Player 2 turn.");
+                }
                 if (player1Score >= 100)
                     break;
-                turn = numberCube.getRoll() == 1 ? player2Turn : turn;
             }
             if (player1Score >= 100)
                 break;
-        }
 
             while (turn == player2Turn) {
                 System.out.println("Type R to roll the dice or E to end your turn.");
-                if (keyboard.nextLine().equalsIgnoreCase("R")) {
-                    if (numberCube.roll() == numberCube.getPreviousRoll())
-                        player2Score += numberCube.roll();
+                input = keyboard.nextLine();
+                if (input.equalsIgnoreCase("R")) {
+                    player1Score += numberCube.roll();
+                    System.out.println("You rolled " + numberCube.getRoll() + "!");
+                    System.out.println("Your current score is " + player1Score + ".");
+                    turn = numberCube.getRoll() == 1 ? player1Turn : turn;
+                    System.out.println("Player 1 turn.");
+                } else if (input.equalsIgnoreCase("E")) {
+                    turn = player1Turn;
+                    System.out.println("Player 1 turn.");
                 }
-                System.out.println("You rolled " + numberCube.getRoll() + "!");
-                System.out.println("Your current score is " + player2Score + ".");
                 if (player2Score >= 100)
                     break;
-                turn = numberCube.getRoll() == 1 ? player1Turn : turn;
             }
         }
-        if (player1Score > player2Score)
+        if (player1Score > player2Score) //Output winner of the game
             System.out.println("Player 1 wins!");
         else System.out.print("Player 2 wins!");
 

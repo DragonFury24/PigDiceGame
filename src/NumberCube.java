@@ -2,7 +2,6 @@ import java.util.Random;
 
 public class NumberCube {
     public NumberCube() {
-        rollValue = roll(); //Sets dice to a value, but will not return face up side
     }
 
     private Random generator = new Random(); //Object that creates random numbers
@@ -47,4 +46,5 @@ public class NumberCube {
         }
         return -1;
     }
+
 }
