@@ -1,4 +1,3 @@
-import javax.lang.model.type.PrimitiveType;
 import java.util.Scanner;
 
 public class Pig {
@@ -23,7 +22,7 @@ public class Pig {
                 if (numberCube.getRoll() != 1) {
                     player1Score += numberCube.getRoll();
                     System.out.println("You rolled " + numberCube.getRoll() + "!");
-                    System.out.println("Your current score is now " + player1Score + ".");
+                    System.out.println("Scores: " + "Player 1 - " + player1Score + " " + "Player 2 - " + player2Score + ".");
                     break;
                 } else {
                     System.out.println("You rolled " + numberCube.getRoll() + "!");
@@ -46,7 +45,7 @@ public class Pig {
                         player1Score = numberCube.isDoubleRoll() ? player1Score + numberCube.doubleRollScore() :
                                 player1Score + numberCube.getRoll();
                         System.out.println("You rolled " + numberCube.getRoll() + "!");
-                        System.out.println("Your current score is " + player1Score + ".");
+                        System.out.println("Scores: " + "Player 1 - " + player1Score + " " + "Player 2 - " + player2Score + ".");
                         turn = numberCube.getRoll() == 1 ? player2Turn : turn;
                     }else {
                         System.out.println("You rolled " + numberCube.getRoll() + "!");
@@ -67,9 +66,9 @@ public class Pig {
                 System.out.println("Type R to roll the dice or E to end your turn.");
                 input = keyboard.nextLine();
                 if (input.equalsIgnoreCase("R")) {
-                    player1Score += numberCube.roll();
+                    player2Score += numberCube.roll();
                     System.out.println("You rolled " + numberCube.getRoll() + "!");
-                    System.out.println("Your current score is " + player1Score + ".");
+                    System.out.println("Scores: " + "Player 1 - " + player1Score + " " + "Player 2 - " + player2Score + ".");
                     turn = numberCube.getRoll() == 1 ? player1Turn : turn;
                     System.out.println("Player 1 turn.");
                 } else if (input.equalsIgnoreCase("E")) {
