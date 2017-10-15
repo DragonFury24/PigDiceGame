@@ -22,29 +22,4 @@ public class NumberCube {
         return previousRoll;
     }
 
-    public boolean isDoubleRoll() {
-        return rollValue == previousRoll;
-    }
-
-    public int doubleRollScore() {
-        int doubleRollValue = -1;
-        if (isDoubleRoll())
-            doubleRollValue = rollValue;
-        switch (doubleRollValue) {
-            case 1:
-                return 25;
-            case 2:
-                return 8;
-            case 3:
-                return 12;
-            case 4:
-                return 16;
-            case 5:
-                return 20;
-            case 6:
-                return 24;
-        }
-        return -1;
-    }
-
 }
