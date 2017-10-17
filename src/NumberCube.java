@@ -22,4 +22,7 @@ public class NumberCube {
         return previousRoll;
     }
 
+    public String toString() {
+        return "Die Value: " + rollValue;
+    }
 }
