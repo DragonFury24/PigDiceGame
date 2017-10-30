@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class Pig {
-    static int turn = 0; //Keeps track of current turn
-    static final short player1Turn = 0;
-    static final short player2Turn = 1;
+    static int turn = 1; //Keeps track of current turn
+    static final short player1Turn = 1;
+    static final short player2Turn = 2;
     static NumberCube numberCube1 = new NumberCube();
     static NumberCube numberCube2 = new NumberCube();
     static int currentTurnScore;
@@ -14,70 +14,40 @@ public class Pig {
         int player1Score = 0, player2Score = 0;
         String input;
 
-        //Values that identify the player turn
-
         while (player1Score < 100 && player2Score < 100) {
-            while (turn == player1Turn) {
-                System.out.println();
-                System.out.println("Player 1 turn.");
-                printOptions();
-                input = keyboard.nextLine();
-                if (input.equalsIgnoreCase("R") || input.equalsIgnoreCase("roll")) {
-                    playerRoll(numberCube1, numberCube2);
-                    if (turn != player1Turn) {
-                        player1Score += currentTurnScore;
-                        currentTurnScore = 0;
-                    }
-                } else if (input.equalsIgnoreCase("E") || input.equalsIgnoreCase("end")) {
-                    turn = player2Turn;
-                    player1Score += currentTurnScore;
+            int thisTurn = turn;
+            System.out.println();
+            System.out.println("Player " + turn + " turn.");
+            printOptions();
+            input = keyboard.nextLine();
+            if (input.equalsIgnoreCase("R") || input.equalsIgnoreCase("roll")) {
+                playerRoll(numberCube1, numberCube2);
+                if (thisTurn != turn) {
+                    player1Score = thisTurn == player1Turn ? player1Score + currentTurnScore : player1Score;
+                    player2Score = thisTurn == player2Turn ? player2Score + currentTurnScore : player2Score;
                     currentTurnScore = 0;
-                } else if (input.equalsIgnoreCase("S") || input.equalsIgnoreCase("score")) {
-                    System.out.println("Player 1: " + player1Score);
-                    System.out.println("Player 2: " + player2Score);
                 }
-                if (player1Score >= 100)
-                    break;
-            }
-            if (player1Score >= 100)
-                break;
-
-            while (turn == player2Turn) {
-                System.out.println();
-                System.out.println("Player 2 turn.");
-                printOptions();
-                input = keyboard.nextLine();
-                if (input.equalsIgnoreCase("R")) {
-                    playerRoll(numberCube1, numberCube2);
-                    if (turn != player2Turn) {
-                        player2Score += currentTurnScore;
-                        currentTurnScore = 0;
-                    }
-                } else if (input.equalsIgnoreCase("E")) {
-                    turn = player1Turn;
-                    player2Score += currentTurnScore;
-                    currentTurnScore = 0;
-                } else if (input.equalsIgnoreCase("S") || input.equalsIgnoreCase("score")) {
-                    System.out.println("Player 1: " + player1Score);
-                    System.out.println("Player 2: " + player2Score);
-                }
-                if (player2Score >= 100)
-                    break;
+            } else if (input.equalsIgnoreCase("E") || input.equalsIgnoreCase("end")) {
+                player1Score = thisTurn == player1Turn ? player1Score + currentTurnScore : player1Score;
+                player2Score = thisTurn == player2Turn ? player2Score + currentTurnScore : player2Score;
+                changeTurn();
+                currentTurnScore = 0;
+            } else if (input.equalsIgnoreCase("S") || input.equalsIgnoreCase("score")) {
+                System.out.println("Player 1: " + player1Score);
+                System.out.println("Player 2: " + player2Score);
             }
         }
+
         if (player1Score > player2Score) {
             System.out.println("Player 1 wins!");
-            System.out.println();
-            System.out.println("Scores");
-            System.out.println("Player 1: " + player1Score);
-            System.out.println("Player 2: " + player2Score);
         } else {
             System.out.print("Player 2 wins!");
-            System.out.println();
-            System.out.println("Scores");
-            System.out.println("Player 1: " + player1Score);
-            System.out.println("Player 2: " + player2Score);
         }
+
+        System.out.println();
+        System.out.println("Scores");
+        System.out.println("Player 1: " + player1Score);
+        System.out.println("Player 2: " + player2Score);
     }
 
 
