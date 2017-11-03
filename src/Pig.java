@@ -17,12 +17,13 @@ public class Pig {
         while (player1Score < 100 && player2Score < 100) {
             int thisTurn = turn;
             System.out.println();
-            System.out.println("Player " + turn + " turn.");
-            printOptions();
+            System.out.println("Player " + turn + " turn."); //current turn
+            printOptions(); //available options
             input = keyboard.nextLine();
             if (input.equalsIgnoreCase("R") || input.equalsIgnoreCase("roll")) {
-                playerRoll(numberCube1, numberCube2);
+                playerRoll(numberCube1, numberCube2);//
                 if (thisTurn != turn) {
+                    //add score
                     player1Score = thisTurn == player1Turn ? player1Score + currentTurnScore : player1Score;
                     player2Score = thisTurn == player2Turn ? player2Score + currentTurnScore : player2Score;
                     currentTurnScore = 0;
