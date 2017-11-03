@@ -35,7 +35,8 @@ public class Pig {
             } else if (input.equalsIgnoreCase("S") || input.equalsIgnoreCase("score")) {
                 System.out.println("Player 1: " + player1Score);
                 System.out.println("Player 2: " + player2Score);
-            }
+            } else
+                System.out.println("Please choose a valid option.");
         }
 
         if (player1Score > player2Score) {
@@ -52,9 +53,11 @@ public class Pig {
 
 
     static void playerRoll(NumberCube numberCube1, NumberCube numberCube2) {
+        //rolls both dice
         numberCube1.roll();
         numberCube2.roll();
-        System.out.println("Rolls: " + numberCube1.getRoll() + " - " + numberCube2.getRoll());
+        System.out.println("Rolls: " + numberCube1.getRoll() + " - " + numberCube2.getRoll()); //dice values
+        //double roll score calculation
         if (numberCube1.getRoll() == numberCube2.getRoll()) {
             currentTurnScore += doubleRollScore(numberCube1, numberCube2);
             System.out.println("You've earned " + currentTurnScore + " points this turn!");
@@ -70,6 +73,7 @@ public class Pig {
         System.out.println("You've earned " + currentTurnScore + " points this turn!");
     }
 
+    //calculate bonus points for rolling doubles
     static int doubleRollScore(NumberCube numberCube1, NumberCube numberCube2) {
         if (numberCube1.getRoll() == numberCube2.getRoll()) {
             switch (numberCube1.getRoll()) {
@@ -93,10 +97,7 @@ public class Pig {
     }
 
     static void changeTurn() {
-        if (turn == player1Turn)
-            turn = player2Turn;
-        else if (turn == player2Turn)
-            turn = player1Turn;
+        turn = turn == player1Turn ? player2Turn : player1Turn;
     }
 
     static void printOptions() {
